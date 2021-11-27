@@ -1,28 +1,32 @@
+import React, { useState } from "react"
 
-import React, { useState, useEffect } from 'react';
+
 
 function App() {
-  const [text, setText] = useState("");
+  const [text, setText] = useState("")
 
-  const handleTyping = (event) => {
-    const { value } = event.target.value
+  function handleChange(e) {
+    const { value } = e.target
     setText(value)
   }
 
-  console.log(text);
+  function calculateWordCount(text) {
+    const wordsArr = text.trim().split(" ")
+    return wordsArr.filter(word => word !== "").length
+  }
 
   return (
     <div>
-      <h1>Speed Typers</h1>
+      <h1>How fast do you type?</h1>
       <textarea
+        onChange={handleChange}
         value={text}
-        name="textArea"
-        onChange={handleTyping}
-      ></textarea>
-      <h4>Time Remaining: </h4>
-      <h1>Word Count: {text.length}</h1>
+      />
+      <h4>Time remaining: ???</h4>
+      <button onClick={() => console.log(calculateWordCount(text))}>Start</button>
+      <h1>Word count: ???</h1>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

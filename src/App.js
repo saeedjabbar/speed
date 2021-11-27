@@ -1,9 +1,20 @@
 import React, { useState, useEffect } from "react"
 
+/**
+ * Challenge:
+ * 
+ * When the timer reaches 0, count the number of words the user typed in 
+ * and display it in the "Word count" section
+ * 
+ * After the game ends, make it so the user can click the Start button again
+ * to play a second time
+ */
+
 function App() {
   const [text, setText] = useState("")
-  const [timeRemaining, setTimeRemaining] = useState(5)
-  const [gameStatus, setGameStatus] = useState(false)
+  const [timeRemaining, setTimeRemaining] = useState(2)
+  const [isTimeRunning, setIsTimeRunning] = useState(false)
+  const [wordCount, setWordCount] = useState(0)
 
   function handleChange(e) {
     const { value } = e.target
@@ -15,18 +26,16 @@ function App() {
     return wordsArr.filter(word => word !== "").length
   }
 
-  function handleGameStatus(gameStatus){
-    setGameStatus(prevStatus => (!prevStatus))
-  }
-
   useEffect(() => {
-    if (timeRemaining > 0 && gameStatus) {
+    if (isTimeRunning && timeRemaining > 0) {
       setTimeout(() => {
         setTimeRemaining(time => time - 1)
       }, 1000)
+    } else if (timeRemaining === 0) {
+      setIsTimeRunning(false)
+      setWordCount(calculateWordCount(text))
     }
-  }, [timeRemaining, gameStatus])
-
+  }, [timeRemaining, isTimeRunning])
 
   return (
     <div>
@@ -36,8 +45,8 @@ function App() {
         value={text}
       />
       <h4>Time remaining: {timeRemaining}</h4>
-      <button onClick={() => handleGameStatus(gameStatus)}>Start</button>
-      <h1 onChange={calculateWordCount(text)}>Word count: ???</h1>
+      <button onClick={() => setIsTimeRunning(true)}>Start</button>
+      <h1>Word count: {wordCount}</h1>
     </div>
   )
 }

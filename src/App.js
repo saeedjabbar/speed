@@ -1,13 +1,14 @@
 import React from "react"
 import Home from "./Home"
 import Products from "./Products"
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom'
+import {Routes, Route, Link} from "react-router-dom";
 
 function App() {
   return (
     <div className="container">
       <nav>
         <Link to="/">Home</Link>
+        <br/> 
         <Link to="/products">Products</Link>
       </nav>
       <Routes>
